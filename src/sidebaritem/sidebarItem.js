@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import debounce, { removeHTMLTags } from "../helpers";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import { withStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 import styles from "./styles";
 import { ListItem, ListItemText } from "@material-ui/core";
 
@@ -25,10 +26,20 @@ class SidebarItemComponent extends React.Component {
               secondary={removeHTMLTags(_note.body.substring(0, 30)) + "..."}
             />
           </div>
+          <DeleteIcon
+            onClick={() => this.deleteNote(_note)}
+            className={classes.deleteIcon}
+          />
         </ListItem>
       </div>
     );
   }
+  selecteNote = (n, i) => this.props.selectNote(n, i);
+  deleteNote = note => {
+    if (window.confirm(`Are you sure you want to delete:  ${note.title}`)) {
+      this.props.deleteNote(note);
+    }
+  };
 }
 
 export default withStyles(styles)(SidebarItemComponent);
