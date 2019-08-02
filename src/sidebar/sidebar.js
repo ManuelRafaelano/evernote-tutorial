@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Button, Divider } from "@material-ui/core";
 import SidebarItemComponent from "../sidebaritem/sidebarItem";
+import { thisExpression } from "@babel/types";
 
 class SidebarComponent extends React.Component {
   constructor() {
@@ -69,10 +70,11 @@ class SidebarComponent extends React.Component {
     this.setState({ title: txt });
   };
   newNote = () => {
-    console.log(this.state);
+    this.props.newNote(this.state.title);
+    this.setState({ title: null, addingNote: false });
   };
   selectNote = (n, i) => this.props.selectNote(n, i);
-  deleteNote = () => console.log("delete note");
+  deleteNote = note => this.props.deleteNote(note);
 }
 
 export default withStyles(styles)(SidebarComponent);
